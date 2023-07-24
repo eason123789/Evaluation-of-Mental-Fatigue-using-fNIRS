@@ -1,4 +1,5 @@
 import tensorflow as tf
+from sklearn.model_selection import train_test_split
 from tensorflow.keras import layers
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, LayerNormalization
@@ -65,15 +66,27 @@ class TransformerBlock(layers.Layer):
         ffn_output = self.dropout2(ffn_output, training=training)
         return self.layernorm2(out1 + ffn_output)
 
-def build_model(input_shape, num_classes):
+# def build_model(input_shape, num_classes):
+#     inputs = layers.Input(shape=input_shape)
+#     x = inputs
+#     transformer_block = TransformerBlock(embed_dim=32, num_heads=2, ff_dim=32)
+#     x = transformer_block(x)
+#     x = layers.GlobalAveragePooling1D()(x)
+#     x = layers.Dropout(0.1)(x)
+#     outputs = layers.Dense(num_classes, activation="softmax")(x)
+#     return tf.keras.Model(inputs=inputs, outputs=outputs)
+
+def build_model(input_shape, embed_dim, num_heads, ff_dim, num_classes):
     inputs = layers.Input(shape=input_shape)
     x = inputs
-    transformer_block = TransformerBlock(embed_dim=32, num_heads=2, ff_dim=32)
+    transformer_block = TransformerBlock(embed_dim=embed_dim, num_heads=num_heads, ff_dim=ff_dim)
     x = transformer_block(x)
     x = layers.GlobalAveragePooling1D()(x)
     x = layers.Dropout(0.1)(x)
     outputs = layers.Dense(num_classes, activation="softmax")(x)
     return tf.keras.Model(inputs=inputs, outputs=outputs)
+
+
 
 def load_and_preprocess_data():
     features, labels = get_data()
@@ -106,7 +119,9 @@ def main():
     features, labels = load_and_preprocess_data()
 
     # Build model
-    model = build_model(input_shape=(features.shape[1],), num_classes=3)
+    # model = build_model(input_shape=(features.shape[1],), num_classes=3)
+    model = build_model(input_shape=(features.shape[1],), embed_dim=features.shape[1], num_heads=2, ff_dim=32,
+                        num_classes=3)
 
     # Compile and train model
     history = compile_and_train_model(model, features, labels)

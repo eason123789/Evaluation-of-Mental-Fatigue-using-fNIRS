@@ -2,7 +2,7 @@ import mne
 import numpy as np
 
 # Load the .set file using mne
-eeg_data = mne.io.read_raw_eeglab('/mnt/data/s01_051017m.set', preload=True)
+eeg_data = mne.io.read_raw_eeglab('preprocessed_data/s01_051017m.set/s01_051017m.set', preload=True)
 
 # Display some basic information about the dataset
 eeg_data.info
