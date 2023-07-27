@@ -79,5 +79,5 @@ for subdir, _, files in os.walk(directory):
 # Calculate proportions of each label for all data
 label_counts_all = all_data['Label'].value_counts(normalize=True)
 
-# Print the results
+# Print the result
 print(label_counts_all)
