@@ -90,7 +90,7 @@ def train_model(model, train_loader, val_loader, num_epochs=20, lr=0.001, patien
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             no_improve_epochs = 0
-            torch.save(model.state_dict(), 'best_model.pth')
+            torch.save(model.state_dict(), '../best_model.pth')
         else:
             no_improve_epochs += 1
             if no_improve_epochs >= patience:
