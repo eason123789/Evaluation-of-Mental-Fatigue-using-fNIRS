@@ -1,1 +1,53 @@
+# Transformer Model for Multiclass Classification
 
+This project implements a multiclass classification pipeline using a Transformer model built with PyTorch. The data used for training and validation is loaded from `.npz` files and the classification model is trained using the Adam optimizer and CrossEntropyLoss as the loss function.
+
+## Code Overview
+
+The code is structured as follows:
+
+1. **CustomDataset Class**: This is a custom class that inherits from PyTorch's Dataset class. It is used to load the data and labels for training and validation.
+
+2. **load_data Function**: This function is used to load data from `.npz` files located in the specified directory.
+
+3. **create_dataloaders Function**: This function splits the loaded data into training and validation datasets, wraps them into PyTorch's Dataloader objects, and returns these Dataloaders.
+
+4. **TransformerModel Class**: This is the Transformer model class that implements the forward method for the Transformer model.
+
+5. **train_model Function**: This function is used to train the Transformer model. It also includes early stopping functionality: if the validation accuracy doesn't improve for a certain number of epochs (defined by the "patience" parameter), the training process is stopped and the best model is saved.
+
+6. **evaluate_model Function**: This function is used to evaluate the trained model on the validation set and calculate the accuracy and F1 score.
+
+7. **Main Execution**: The main execution part of the script loads the data, creates the model, and starts the training process.
+
+## Usage
+
+To run the script, use the following command:
+
+```bash
+python tf_v3.py
+```
+
+This command will start the training process. During training, the script will print the validation accuracy and F1 score for each epoch. If the validation accuracy doesn't improve for a number of epochs specified by the `patience` parameter (default is 5), the training will stop early. The best model's parameters will be saved to `../best_model.pth`.
+
+## Dependencies
+
+The script depends on the following libraries:
+
+- numpy
+- torch
+- sklearn
+
+Make sure to install these libraries before running the script:
+
+```bash
+pip install numpy torch sklearn
+```
+
+## Customization
+
+The script can be easily customized for your needs. You can change the directory where the data is loaded from by modifying the `data_path` parameter in the `load_data` function. You can also adjust the parameters of the `train_model` function, such as the number of epochs, the learning rate, and the patience for early stopping. You can adjust the architecture of the Transformer model in the `TransformerModel` class.
+
+## Note
+
+The script assumes that the data files contain three arrays: 'spectral_data', 'temporal_data', and 'labels'. If your data files have a different structure, you will need to adjust the `load_data` function accordingly.
