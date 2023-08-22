@@ -44,5 +44,3 @@ preprocessed_data/
 
 - Make sure to execute `process_eeg.py` before running either `eeg_transformer.py` or `cnn.py` to ensure that the data is properly preprocessed.
 ```
-
-You can put this text in a `README.md` file at the root of your `final_code` folder to provide detailed instructions for users or collaborators.
